@@ -4,12 +4,12 @@ import { deserialize } from "../src/index";
 describe('deserialize', () => {
   let jsonApiObject: JSONAPI.Document = {
     data: {
-      type: 'product',
-      id: '1'
+      type: "product",
+      id: "1"
     }
   };
 
-  it("should return a JS resource object with 'id' and 'type' properties", () => {
+  it("should return a JS resource object with 'type' and 'id' properties", () => {
     const deserialized = deserialize(jsonApiObject)
 
     expect(deserialized.hasOwnProperty('type')).toBe(true)
