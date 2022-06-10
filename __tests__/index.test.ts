@@ -23,7 +23,7 @@ describe('deserialize', () => {
     expect(deserialized.id).toBe('1')
   })
 
-  describe('of a resource object with attributes', () => {
+  describe('of a JSON:API resource object with attributes', () => {
     resourceObject = {
       data: {
         type: "product",
@@ -35,11 +35,18 @@ describe('deserialize', () => {
       }
     };
 
-    it("should return a resource with the attributes as properties", () => {
+    it("should return a JS resource object with the attributes as properties", () => {
       const deserialized = deserialize(resourceObject)
 
       expect(deserialized.hasOwnProperty('name')).toBe(true)
       expect(deserialized.hasOwnProperty('sku')).toBe(true)
+    })
+
+    it("should return a JS resource object with the same attributes values", () => {
+      const deserialized = deserialize(resourceObject)
+
+      expect(deserialized.name).toBe('iPhone 13 Pro Silver 128GB')
+      expect(deserialized.sku).toBe('iphone-13-pro-silver-128gb')
     })
   })
 })
