@@ -15,4 +15,11 @@ describe('deserialize', () => {
     expect(deserialized.hasOwnProperty('type')).toBe(true)
     expect(deserialized.hasOwnProperty('id')).toBe(true)
   })
+
+  it("should return a JS resource object with type 'product' and id '1'", () => {
+    const deserialized = deserialize(jsonApiObject)
+
+    expect(deserialized.type).toBe('product')
+    expect(deserialized.id).toBe('1')
+  })
 })
