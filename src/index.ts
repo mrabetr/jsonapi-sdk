@@ -1,4 +1,5 @@
-import * as JSONAPI from 'jsonapi-typescript';
+// import * as JSONAPI from 'jsonapi-typescript';
+import type { DocWithData, ResourceObject } from 'jsonapi-typescript'
 // import { utilFunction } from "./utils";
 
 interface Resource {
@@ -8,7 +9,7 @@ interface Resource {
   sku: string
 }
 
-export function deserialize(resourceObject: JSONAPI.Document): Resource {
+export function deserialize(response: DocWithData): Resource {
   return {
     type: "product",
     id: "1",
