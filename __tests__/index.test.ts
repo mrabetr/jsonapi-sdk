@@ -1,4 +1,3 @@
-// import * as JSONAPI from 'jsonapi-typescript';
 import type { DocWithData, ResourceObject } from 'jsonapi-typescript'
 import { deserialize } from "../src/index";
 
