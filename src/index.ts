@@ -14,10 +14,15 @@ interface ResourceId extends ResourceType {
 }
 
 interface Resource extends ResourceId {
-  // name?: string
-  // sku?: string
   metadata?: Metadata
 }
+
+// interface Resource {
+//   type: string
+//   id: string
+//   name: string
+//   sku: string
+// }
 
 // export function deserialize(response: DocWithData): Resource {
 //   return {
@@ -75,3 +80,4 @@ const deserializeResource = <T extends ResourceType>(res: any, included?: Includ
 }
 
 export { deserialize }
+// export type { Resource }
