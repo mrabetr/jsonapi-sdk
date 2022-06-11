@@ -1,4 +1,4 @@
-import type { Value as JSONValue } from 'json-typescript'
+import type { Value } from 'json-typescript'
 import type { DocWithData, Included, ResourceIdentifierObject, ResourceObject, AttributesObject, RelationshipsObject } from 'jsonapi-typescript'
 // import { utilFunction } from "./utils";
 
@@ -119,7 +119,7 @@ const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate &
     if (value && (isResourceId(value) || (Array.isArray(value) && isResourceId(value[0])))) {
       relationships[field] = { data: value as ResourceIdentifierObject }
     }
-    else attributes[field] = value as JSONValue
+    else attributes[field] = value as Value
   }
 
   const serialized: ResourceObject = {
