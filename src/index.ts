@@ -1,7 +1,12 @@
-import type { DocWithData, Included, ResourceIdentifierObject, ResourceObject } from 'jsonapi-typescript'
+import type { Value as JSONValue } from 'json-typescript'
+import type { DocWithData, Included, ResourceIdentifierObject, ResourceObject, AttributesObject, RelationshipsObject } from 'jsonapi-typescript'
 // import { utilFunction } from "./utils";
 
-type ResourceTypeLock = 'product'
+type ResourceTypeLock =
+  'product'
+| 'cart'
+
+const resourceList = ['product', 'cart', 'cart_item', 'store'];
 
 type Metadata = { [key: string]: any }
 
@@ -15,6 +20,24 @@ interface ResourceId extends ResourceType {
 
 interface Resource extends ResourceId {
   metadata?: Metadata
+}
+
+interface ResourceCreate {
+  metadata?: Metadata
+}
+
+
+interface ResourceUpdate {
+  readonly id: string
+  metadata?: Metadata
+}
+
+const isResourceId = (resource: any): resource is ResourceId => {
+  return (resource && resource.type && resource.id) && resourceList.includes(resource.type)
+}
+
+const isResourceType = (resource: any): resource is ResourceType => {
+  return resource && (typeof resource.type !== 'undefined') && resource.type && resourceList.includes(resource.type)
 }
 
 // interface Resource {
@@ -79,5 +102,37 @@ const deserializeResource = <T extends ResourceType>(res: any, included?: Includ
   return resource
 }
 
-export { deserialize }
-// export type { Resource }
+// SERIALIZATION
+
+const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate & ResourceId)): ResourceObject => {
+
+  const attributes: AttributesObject = {}
+  const relationships: RelationshipsObject = {}
+
+  for (const field in resource) {
+    if (['type', 'id'].includes(field)) continue
+    const value = resource[field as keyof (ResourceCreate | ResourceUpdate)]
+    if (value && isResourceType(value) && (value as any).id === null) {
+      relationships[field] = { data: null }
+    }
+    else
+    if (value && (isResourceId(value) || (Array.isArray(value) && isResourceId(value[0])))) {
+      relationships[field] = { data: value as ResourceIdentifierObject }
+    }
+    else attributes[field] = value as JSONValue
+  }
+
+  const serialized: ResourceObject = {
+    type: resource.type,
+    attributes,
+    relationships
+  }
+
+  if (isResourceId(resource)) serialized.id = resource.id
+
+  return serialized
+
+}
+
+export { deserialize, serialize }
+export type { Resource, ResourceTypeLock }

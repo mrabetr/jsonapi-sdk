@@ -1,6 +1,7 @@
+import type { Value as JSONValue } from 'json-typescript'
 import type { DocWithData, ResourceObject } from 'jsonapi-typescript'
-// import type { Resource } from "../src/index";
-import { deserialize } from "../src/index";
+import type { Resource, ResourceTypeLock } from "../src/index";
+import { deserialize, serialize } from "../src/index";
 
 describe('deserialize', () => {
   const response: DocWithData = {
@@ -66,4 +67,34 @@ describe('deserialize', () => {
       expect(deserializedResponse.sku).toBe('iphone-13-pro-silver-128gb')
     })
   })
+})
+
+describe('serialize', () => {
+  const type: ResourceTypeLock = 'cart'
+  const resource = {
+    id: "98",
+    type,
+    guest: true,
+    email: null,
+    currency: "USD",
+    cart_items: [
+      {
+        id: "202",
+        type: 'cart_item'
+      }
+    ],
+    store: {
+      id: "52",
+      type: "store"
+    }
+  }
+
+  const serialized = serialize(resource);
+  console.log(serialized);
+
+  // it("should return a JS resource object with 'type' and 'id' properties", () => {
+
+  //   expect(serialized.hasOwnProperty('type')).toBe(true)
+  //   expect(serialized.hasOwnProperty('id')).toBe(true)
+  // })
 })
