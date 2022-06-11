@@ -92,9 +92,15 @@ describe('serialize', () => {
   const serialized = serialize(resource);
   console.log(serialized);
 
-  // it("should return a JS resource object with 'type' and 'id' properties", () => {
+  it("should return a JSON:API resource object with 'type' and 'id' properties", () => {
 
-  //   expect(serialized.hasOwnProperty('type')).toBe(true)
-  //   expect(serialized.hasOwnProperty('id')).toBe(true)
-  // })
+    expect(serialized.hasOwnProperty('type')).toBe(true)
+    expect(serialized.hasOwnProperty('id')).toBe(true)
+  })
+
+  it("should return a JSON:API resource object with type 'cart' and id '98'", () => {
+
+    expect(serialized.type).toBe('cart')
+    expect(serialized.id).toBe('98')
+  })
 })
