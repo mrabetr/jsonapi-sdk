@@ -17,6 +17,7 @@ describe('deserialize', () => {
 
   it("should return a JS resource object with 'type' and 'id' properties", () => {
     const deserialized = deserialize(response)
+    console.log(deserialized);
 
     expect(deserialized.hasOwnProperty('type')).toBe(true)
     expect(deserialized.hasOwnProperty('id')).toBe(true)
@@ -24,9 +25,10 @@ describe('deserialize', () => {
 
   it("should return a JS resource object with type 'product' and id '1'", () => {
     const deserialized = deserialize(response)
+    const deserializedResponse = JSON.parse(JSON.stringify(deserialized))
 
-    expect(deserialized.type).toBe('product')
-    expect(deserialized.id).toBe('1')
+    expect(deserializedResponse.type).toBe('product')
+    expect(deserializedResponse.id).toBe('1')
   })
 
   describe('of a JSON:API resource object with attributes', () => {
@@ -50,9 +52,10 @@ describe('deserialize', () => {
 
     it("should return a JS resource object with the same attributes values", () => {
       const deserialized = deserialize(response)
+      const deserializedResponse = JSON.parse(JSON.stringify(deserialized))
 
-      expect(deserialized.name).toBe('iPhone 13 Pro Silver 128GB')
-      expect(deserialized.sku).toBe('iphone-13-pro-silver-128gb')
+      expect(deserializedResponse.name).toBe('iPhone 13 Pro Silver 128GB')
+      expect(deserializedResponse.sku).toBe('iphone-13-pro-silver-128gb')
     })
   })
 })
