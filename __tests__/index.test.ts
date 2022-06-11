@@ -1,6 +1,5 @@
-import type { Value as JSONValue } from 'json-typescript'
 import type { DocWithData, ResourceObject } from 'jsonapi-typescript'
-import type { Resource, ResourceTypeLock } from "../src/index";
+import type { Resource, ResourceTypeLock, Product } from "../src/index";
 import { deserialize, serialize } from "../src/index";
 
 describe('deserialize', () => {
@@ -36,9 +35,8 @@ describe('deserialize', () => {
   };
   // console.log(JSONAPIObject);
 
-  const deserialized = deserialize(response);
-  // const deserialized: (Resource | Resource[]) = deserialize(response)
-  console.log(deserialized);
+  const deserialized = deserialize(response) as Product;
+  console.log(deserialized.variations);
 
   it("should return a JS resource object with 'type' and 'id' properties", () => {
 
@@ -47,10 +45,9 @@ describe('deserialize', () => {
   })
 
   it("should return a JS resource object with type 'product' and id '1'", () => {
-    const deserializedResponse = JSON.parse(JSON.stringify(deserialized));
 
-    expect(deserializedResponse.type).toBe('product')
-    expect(deserializedResponse.id).toBe('1')
+    expect(deserialized.type).toBe('product')
+    expect(deserialized.id).toBe('1')
   })
 
   describe('of a JSON:API resource object with attributes', () => {
@@ -61,10 +58,9 @@ describe('deserialize', () => {
     })
 
     it("should return a JS resource object with the same attributes values", () => {
-      const deserializedResponse = JSON.parse(JSON.stringify(deserialized));
 
-      expect(deserializedResponse.name).toBe('iPhone 13 Pro Silver 128GB')
-      expect(deserializedResponse.sku).toBe('iphone-13-pro-silver-128gb')
+      expect(deserialized.name).toBe('iPhone 13 Pro Silver 128GB')
+      expect(deserialized.sku).toBe('iphone-13-pro-silver-128gb')
     })
   })
 })

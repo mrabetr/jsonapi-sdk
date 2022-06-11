@@ -22,10 +22,20 @@ interface Resource extends ResourceId {
   metadata?: Metadata
 }
 
+interface Product extends Resource {
+  name?: string
+  sku?: string
+
+  variations?: Variation[]
+}
+
+interface Variation extends Resource {
+  name?: string
+}
+
 interface ResourceCreate {
   metadata?: Metadata
 }
-
 
 interface ResourceUpdate {
   readonly id: string
@@ -39,22 +49,6 @@ const isResourceId = (resource: any): resource is ResourceId => {
 const isResourceType = (resource: any): resource is ResourceType => {
   return resource && (typeof resource.type !== 'undefined') && resource.type && resourceList.includes(resource.type)
 }
-
-// interface Resource {
-//   type: string
-//   id: string
-//   name: string
-//   sku: string
-// }
-
-// export function deserialize(response: DocWithData): Resource {
-//   return {
-//     type: "product",
-//     id: "1",
-//     name: "iPhone 13 Pro Silver 128GB",
-//     sku: "iphone-13-pro-silver-128gb"
-//   }
-// }
 
 // DESERIALIZATION
 
@@ -135,4 +129,4 @@ const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate &
 }
 
 export { deserialize, serialize }
-export type { Resource, ResourceTypeLock }
+export type { Resource, ResourceTypeLock, Product }
