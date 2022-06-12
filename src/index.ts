@@ -1,26 +1,7 @@
 import type { Value } from 'json-typescript'
 import type { DocWithData, Included, ResourceIdentifierObject, ResourceObject, AttributesObject, RelationshipsObject } from 'jsonapi-typescript'
-// import { utilFunction } from "./utils";
-
-type ResourceTypeLock =
-  'product'
-| 'cart'
-
-const resourceList = ['product', 'cart', 'cart_item', 'store'];
-
-type Metadata = { [key: string]: any }
-
-interface ResourceType {
-  readonly type: ResourceTypeLock
-}
-
-interface ResourceId extends ResourceType {
-  readonly id: string
-}
-
-interface Resource extends ResourceId {
-  metadata?: Metadata
-}
+import type { ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate } from "./resource";
+import { isResourceType, isResourceId } from "./resource";
 
 interface Product extends Resource {
   name?: string
@@ -31,23 +12,6 @@ interface Product extends Resource {
 
 interface Variation extends Resource {
   name?: string
-}
-
-interface ResourceCreate {
-  metadata?: Metadata
-}
-
-interface ResourceUpdate {
-  readonly id: string
-  metadata?: Metadata
-}
-
-const isResourceId = (resource: any): resource is ResourceId => {
-  return (resource && resource.type && resource.id) && resourceList.includes(resource.type)
-}
-
-const isResourceType = (resource: any): resource is ResourceType => {
-  return resource && (typeof resource.type !== 'undefined') && resource.type && resourceList.includes(resource.type)
 }
 
 // DESERIALIZATION
@@ -125,8 +89,7 @@ const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate &
   if (isResourceId(resource)) serialized.id = resource.id
 
   return serialized
-
 }
 
 export { deserialize, serialize }
-export type { Resource, ResourceTypeLock, Product }
+export type { Product }
