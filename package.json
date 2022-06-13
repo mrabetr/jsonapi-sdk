@@ -1,6 +1,16 @@
 {
   "name": "jsonapi-sdk",
   "version": "0.0.1",
+  "keywords": [
+    "typescript",
+    "jsonapi",
+    "json:api",
+    "json-api",
+    "json api",
+    "deserializer",
+    "serializer",
+    "rest api"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mrabetr/jsonapi-sdk"
