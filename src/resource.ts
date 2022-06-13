@@ -1,10 +1,10 @@
-const resourceList = ['product', 'Variation', 'VariationOption', 'cart', 'cart_item', 'store'];
+const resourceList = ['product', 'variation', 'variation_option', 'cart', 'cart_item', 'store'];
 
 // type ResourceTypeLock = ModelType
 type ModelType =
   'product'
-| 'Variation'
-| 'VariationOption'
+| 'variation'
+| 'variation_option'
 | 'cart'
 | 'cart_item'
 | 'store'
