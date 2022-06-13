@@ -1,6 +1,6 @@
 import type { Value } from 'json-typescript'
 import type { DocWithData, Included, ResourceIdentifierObject, ResourceObject, AttributesObject, RelationshipsObject } from 'jsonapi-typescript'
-import type { ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate } from "./resource";
+import type { ModelType, ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate } from "./resource";
 import { isResourceType, isResourceId } from "./resource";
 
 // DESERIALIZATION
@@ -81,3 +81,4 @@ const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate &
 }
 
 export { deserialize, serialize }
+export type { DocWithData, ModelType, ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate }

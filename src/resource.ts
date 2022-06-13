@@ -1,9 +1,13 @@
-const resourceList = ['product', 'cart', 'cart_item', 'store'];
+const resourceList = ['product', 'Variation', 'VariationOption', 'cart', 'cart_item', 'store'];
 
 // type ResourceTypeLock = ModelType
 type ModelType =
   'product'
+| 'Variation'
+| 'VariationOption'
 | 'cart'
+| 'cart_item'
+| 'store'
 
 type Metadata = { [key: string]: any }
 
