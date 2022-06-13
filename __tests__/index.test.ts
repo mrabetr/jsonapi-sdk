@@ -28,7 +28,6 @@ describe('deserialize', () => {
       }
     }
   };
-  // console.log(response);
 
   let JSONAPIObject: ResourceObject = {
     type: "product",
@@ -58,10 +57,13 @@ describe('deserialize', () => {
       expect(deserialized.hasOwnProperty('sku')).toBe(true)
     })
 
-    it("should return a JS resource object with the same attributes values", () => {
+    it("should return a JS resource object with the same attributes", () => {
+      // Attributes object from the DocWithData response object
+      const res = response.data as ResourceObject;
+      // Attributes subset object from the deserialized Resource object
+      const deserializedAttributes = (({ name, sku }) => ({ name, sku }))(deserialized);
 
-      expect(deserialized.name).toBe('iPhone 13 Pro Silver 128GB')
-      expect(deserialized.sku).toBe('iphone-13-pro-silver-128gb')
+      expect(deserializedAttributes).toEqual(res.attributes)
     })
   })
 })
@@ -95,9 +97,24 @@ describe('serialize', () => {
     expect(serialized.hasOwnProperty('id')).toBe(true)
   })
 
-  it("should return a JSON:API resource object with type 'cart' and id '98'", () => {
+  it(`should return a JSON:API resource object with type '${resource.type}' and id '${resource.id}'`, () => {
 
-    expect(serialized.type).toBe('cart')
-    expect(serialized.id).toBe('98')
+    expect(serialized.type).toBe(resource.type)
+    expect(serialized.id).toBe(resource.id)
+  })
+
+  describe('of a JS resource object with attributes and relationships', () => {
+    it("should return a JSON:API resource object with 'attributes' and 'relationships' properties", () => {
+
+      expect(serialized.hasOwnProperty('attributes')).toBe(true)
+      expect(serialized.hasOwnProperty('relationships')).toBe(true)
+    })
+
+    it("should return a JSON:API resource object to have the expected properties in attributes and relationships", () => {
+
+      expect(serialized.attributes).toHaveProperty('email')
+      expect(serialized.relationships).toHaveProperty('cart_items')
+      expect(serialized.relationships).toHaveProperty('store')
+    })
   })
 })
