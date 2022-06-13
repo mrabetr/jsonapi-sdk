@@ -1,5 +1,5 @@
 import type { DocWithData, ResourceObject } from 'jsonapi-typescript'
-import type { ResourceTypeLock } from "../src/resource";
+import type { ModelType } from "../src/resource";
 import type { Product } from "../src/models";
 import { deserialize, serialize } from "../src/index";
 
@@ -67,7 +67,7 @@ describe('deserialize', () => {
 })
 
 describe('serialize', () => {
-  const type: ResourceTypeLock = 'cart'
+  const type: ModelType = 'cart'
   const resource = {
     id: "98",
     type,

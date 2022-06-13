@@ -1,13 +1,14 @@
-type ResourceTypeLock =
+const resourceList = ['product', 'cart', 'cart_item', 'store'];
+
+// type ResourceTypeLock = ModelType
+type ModelType =
   'product'
 | 'cart'
-
-const resourceList = ['product', 'cart', 'cart_item', 'store'];
 
 type Metadata = { [key: string]: any }
 
 interface ResourceType {
-  readonly type: ResourceTypeLock
+  readonly type: ModelType
 }
 
 interface ResourceId extends ResourceType {
@@ -35,5 +36,5 @@ const isResourceType = (resource: any): resource is ResourceType => {
   return resource && (typeof resource.type !== 'undefined') && resource.type && resourceList.includes(resource.type)
 }
 
-export type { ResourceTypeLock, ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate }
+export type { ModelType, ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate }
 export { isResourceType, isResourceId }
