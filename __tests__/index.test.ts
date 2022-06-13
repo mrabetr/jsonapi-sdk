@@ -1,6 +1,6 @@
 import type { DocWithData, ResourceObject } from 'jsonapi-typescript'
 import type { ResourceTypeLock } from "../src/resource";
-import type { Product } from "../src/index";
+import type { Product } from "../src/models";
 import { deserialize, serialize } from "../src/index";
 
 describe('deserialize', () => {
@@ -37,7 +37,7 @@ describe('deserialize', () => {
   // console.log(JSONAPIObject);
 
   const deserialized = deserialize(response) as Product;
-  console.log(deserialized.variations);
+  console.log(deserialized);
 
   it("should return a JS resource object with 'type' and 'id' properties", () => {
 
@@ -87,7 +87,7 @@ describe('serialize', () => {
   }
 
   const serialized = serialize(resource);
-  console.log(serialized.attributes);
+  console.log(serialized);
 
   it("should return a JSON:API resource object with 'type' and 'id' properties", () => {
 

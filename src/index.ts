@@ -3,17 +3,6 @@ import type { DocWithData, Included, ResourceIdentifierObject, ResourceObject, A
 import type { ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate } from "./resource";
 import { isResourceType, isResourceId } from "./resource";
 
-interface Product extends Resource {
-  name?: string
-  sku?: string
-
-  variations?: Variation[]
-}
-
-interface Variation extends Resource {
-  name?: string
-}
-
 // DESERIALIZATION
 
 const deserialize = <R extends Resource>(response: DocWithData): R | R[] => {
@@ -92,4 +81,3 @@ const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate &
 }
 
 export { deserialize, serialize }
-export type { Product }
