@@ -16,10 +16,70 @@ npm install jsonapi-sdk
 
 ## Usage
 
+[![Edit jsonapi-sdk](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/jsonapi-sdk-mwv62w?fontsize=14&hidenavigation=1&theme=dark)
+
 ```typescript
 import { deserialize, serialize } from 'jsonapi-sdk'
+import type { DocWithData, ModelType, Resource } from "jsonapi-sdk";
 
-const deserialized = deserialize(jsonApiObject)
+// sample test data
 
-const serialized = serialize(jsObject)
+// jsonapiResponse variable to be deserialized
+export const jsonapiResponse: DocWithData = {
+  data: {
+    type: "product",
+    id: "1",
+    attributes: {
+      name: "iPhone 13 Pro Silver 128GB",
+      sku: "iphone-13-pro-silver-128gb"
+    },
+    relationships: {
+      variations: {
+        data: [
+          {
+            type: "variation",
+            id: "1"
+          },
+          {
+            type: "variation",
+            id: "2"
+          }
+        ]
+      }
+    }
+  }
+};
+
+// resource variable to be serialized
+const type: ModelType = "cart";
+export const resource = {
+  id: "98",
+  type,
+  guest: true,
+  email: null,
+  currency: "USD",
+  cart_items: [
+    {
+      id: "202",
+      type: "cart_item"
+    }
+  ],
+  store: {
+    id: "52",
+    type: "store"
+  }
+};
+
+// Desrialization
+
+const deserialized = deserialize(jsonapiResponse);
+console.log(deserialized);
+// deserialized is of type Resource or Resource[] if the exampe was an array
+// new types can be created e.g. Product which extends from Resource to read the data
+
+// Serialization
+
+const serialized = serialize(resource);
+console.log(serialized);
+// serialized is of type ResourceObject, which has these properties: id, type, attributes and relationships
 ```

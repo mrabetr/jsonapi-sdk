@@ -1,4 +1,4 @@
-import { Resource } from "./resource";
+import type { Resource } from "./resource";
 
 type Amount = {
   cents: number
