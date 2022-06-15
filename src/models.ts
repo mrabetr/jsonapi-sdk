@@ -129,4 +129,4 @@ interface CartItem extends Resource {
   subtotal_amount: Amount
 }
 
-export type { Product }
+export type { Product, Variation, VariationOptions, Cart, CartItem }

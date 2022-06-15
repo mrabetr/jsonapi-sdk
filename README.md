@@ -73,13 +73,54 @@ export const resource = {
 // Desrialization
 
 const deserialized = deserialize(jsonapiResponse);
-console.log(deserialized);
 // deserialized is of type Resource or Resource[] if the exampe was an array
 // new types can be created e.g. Product which extends from Resource to read the data
+console.log(deserialized);
+//{
+//  "id": "1",
+//  "type": "product",
+//  "name": "iPhone 13 Pro Silver 128GB",
+//  "sku": "iphone-13-pro-silver-128gb",
+//  "variations": [
+//    {
+//      "id": "1",
+//      "type": "variation"
+//    },
+//    {
+//      "id": "2",
+//      "type": "variation"
+//    }
+//  ]
+//}
 
 // Serialization
 
 const serialized = serialize(resource);
-console.log(serialized);
 // serialized is of type ResourceObject, which has these properties: id, type, attributes and relationships
+console.log(serialized);
+//{
+//  "id": "98",
+//  "type": "cart",
+//  "attributes": {
+//    "guest": true,
+//    "email": null,
+//    "currency": "USD"
+//  },
+//  "relationships": {
+//    "cart_items": {
+//      "data": [
+//        {
+//          "id": "202",
+//          "type": "cart_item"
+//        }
+//      ]
+//    },
+//    "store": {
+//      "data": {
+//        "id": "52",
+//        "type": "store"
+//      }
+//    }
+//  }
+//}
 ```

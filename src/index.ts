@@ -82,3 +82,4 @@ const serialize = (resource: (ResourceCreate & ResourceType) | (ResourceUpdate &
 
 export { deserialize, serialize }
 export type { DocWithData, ModelType, ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate }
+export type { Product, Variation, VariationOptions, Cart, CartItem } from "./models"
