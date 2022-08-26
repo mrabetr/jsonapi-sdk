@@ -90,6 +90,22 @@ export interface Collection extends Resource {
   products?: Product[]
 }
 
+export interface Customer extends Resource {
+  email: string
+  first_name?: string
+  last_name?: string
+
+  addresses: Address[]
+}
+
+export interface Store extends Resource {
+  name: string
+  storefront_url?: string
+
+  price_list?: PriceList
+  stock_location?: StockLocation
+}
+
 export interface Cart extends Resource {
   guest: boolean
   email: string
@@ -133,6 +149,10 @@ export interface Order extends Resource {
   tax_amount: Amount
   total_amount: Amount
 
+  shipping_address?: Address
+  billing_address?: Address
+  customer?: Customer
+  store?: Store
   order_items?: OrderItem[]
 }
 
