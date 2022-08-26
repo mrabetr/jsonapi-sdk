@@ -8,11 +8,20 @@ export type ModelType =
 | 'store'
 | 'order'
 | 'order_item'
+| 'transaction'
+| 'address'
+| 'customer'
+| 'collection'
+| 'price_list'
+| 'price'
+| 'stock_location'
+| 'stock_item'
 
 // Resource List (used to identify relationships when serializing a resource)
 const resourceList = [
   'product', 'variation', 'variation_option', 'cart', 'cart_item', 'store',
-  'order', 'order_item'
+  'order', 'order_item', 'transaction', 'address', 'customer', 'collection',
+  'price_list', 'price', 'stock_location', 'stock_item'
 ];
 
 type Metadata = { [key: string]: any }
