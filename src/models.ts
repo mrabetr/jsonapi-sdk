@@ -6,33 +6,30 @@ type Amount = {
   formatted: string
 }
 
-interface Variation extends Resource {
+export interface Variation extends Resource {
   name: string
+
   options?: VariationOption[]
 }
 
-type Variations = {
-  data: Variation[]
-}
-
-interface VariationOption extends Resource {
+export interface VariationOption extends Resource {
   name: string
   variation_name?: string
+
   variation?: Variation
 }
 
-type VariationOptions = {
-  data: VariationOption[]
-}
-
-interface PriceList extends Resource {
+export interface PriceList extends Resource {
   name: string
   description?: string
   currency: string
   tax_incl: boolean
+
+  prices?: Price[]
+  products?: Product[]
 }
 
-interface Price extends Resource {
+export interface Price extends Resource {
   currency: string
   amount: Amount
   original_amount: Amount
@@ -41,16 +38,15 @@ interface Price extends Resource {
   product?: Product
 }
 
-type Prices = {
-  data: Price[]
-}
-
-interface StockLocation extends Resource {
+export interface StockLocation extends Resource {
   name: string
   description?: string
+
+  stock_items?: StockItem[]
+  products?: Product[]
 }
 
-interface StockItem extends Resource {
+export interface StockItem extends Resource {
   quantity: number
   reserved: number
   available: number
@@ -59,7 +55,7 @@ interface StockItem extends Resource {
   product?: Product
 }
 
-interface Product extends Resource {
+export interface Product extends Resource {
   name: string
   description?: string
   slug: string
@@ -73,20 +69,16 @@ interface Product extends Resource {
   livemode?: boolean
 
   parent?: Product
-  children?: ProductChildren
-  variations?: Variations
-  variation_options?: VariationOptions
-  prices: Prices
+  children?: Product[]
+  variations?: Variation[]
+  variation_options?: VariationOption[]
+  prices: Price[]
   stock_items?: StockItem[]
 }
 
-type ProductChildren = {
-  data: Product[]
-}
-
-interface Collection extends Resource {
+export interface Collection extends Resource {
   name: string
-  description: string
+  description?: string
   slug: string
   image_url: string
   is_parent: boolean
@@ -98,11 +90,7 @@ interface Collection extends Resource {
   products?: Product[]
 }
 
-type CartItems = {
-  data: CartItem[]
-}
-
-interface Cart extends Resource {
+export interface Cart extends Resource {
   guest: boolean
   email: string
   currency: string
@@ -113,20 +101,93 @@ interface Cart extends Resource {
   tax_amount: Amount
   total_amount: Amount
 
-  cart_items: CartItems
+  cart_items?: CartItem[]
 }
 
-interface CartItem extends Resource {
+export interface CartItem extends Resource {
   name: string
   description: string
   sku: string
-  product_id: string
   image_url: string
   quantity: string
   currency: string
   price: Amount
   original_price: Amount
   subtotal_amount: Amount
+
+  cart: Cart
+  item: Product
 }
 
-export type { Product, Variation, VariationOptions, Cart, CartItem }
+export interface Order extends Resource {
+  number: string
+  email: string
+  currency: string
+  tax_incl: boolean
+  tax_rate: number
+  status: string
+  payment_status: string
+  fulfillment_status: string
+  subtotal_amount: Amount
+  shipping_amount: Amount
+  tax_amount: Amount
+  total_amount: Amount
+
+  order_items?: OrderItem[]
+}
+
+export interface OrderItem extends Resource {
+  name: string
+  description: string
+  sku: string
+  image_url: string
+  quantity: string
+  currency: string
+  price: Amount
+  original_price: Amount
+  subtotal_amount: Amount
+
+  order: Order
+  item: Product
+}
+
+type PaymentParams = {
+  public_key?: string
+  client_secret?: string
+  checkout_session_id?: string
+  checkout_session_url?: string
+  refund_id?: string
+}
+
+export interface Transaction extends Resource {
+  gateway: string
+  transaction_type: string
+  currency: string
+  amount: Amount
+  payment_id: string
+  payment_params: PaymentParams
+  payment_status: string
+  paid: boolean
+
+  order?: Order
+}
+
+type AddressOwner = 'Customer' | 'Merchant' | 'StockLocation'
+
+export interface Address extends Resource {
+  first_name: string
+  last_name: string
+  company?: string
+  line1: string
+  line2?: string
+  city: string
+  postal_code: string
+  country?: string
+  country_code: string
+  name?: string
+  region?: string
+  region_code?: string
+  phone?: string
+
+  owner?: AddressOwner
+}

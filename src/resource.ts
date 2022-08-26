@@ -1,44 +1,47 @@
-const resourceList = ['product', 'variation', 'variation_option', 'cart', 'cart_item', 'store'];
-
-// type ResourceTypeLock = ModelType
-type ModelType =
+// Model Types
+export type ModelType =
   'product'
 | 'variation'
 | 'variation_option'
 | 'cart'
 | 'cart_item'
 | 'store'
+| 'order'
+| 'order_item'
+
+// Resource List (used to identify relationships when serializing a resource)
+const resourceList = [
+  'product', 'variation', 'variation_option', 'cart', 'cart_item', 'store',
+  'order', 'order_item'
+];
 
 type Metadata = { [key: string]: any }
 
-interface ResourceType {
+export interface ResourceType {
   readonly type: ModelType
 }
 
-interface ResourceId extends ResourceType {
+export interface ResourceId extends ResourceType {
   readonly id: string
 }
 
-interface Resource extends ResourceId {
+export interface Resource extends ResourceId {
   metadata?: Metadata
 }
 
-interface ResourceCreate {
+export interface ResourceCreate {
   metadata?: Metadata
 }
 
-interface ResourceUpdate {
+export interface ResourceUpdate {
   readonly id: string
   metadata?: Metadata
 }
 
-const isResourceId = (resource: any): resource is ResourceId => {
+export const isResourceId = (resource: any): resource is ResourceId => {
   return (resource && resource.type && resource.id) && resourceList.includes(resource.type)
 }
 
-const isResourceType = (resource: any): resource is ResourceType => {
+export const isResourceType = (resource: any): resource is ResourceType => {
   return resource && (typeof resource.type !== 'undefined') && resource.type && resourceList.includes(resource.type)
 }
-
-export type { ModelType, ResourceType, ResourceId, Resource, ResourceCreate, ResourceUpdate }
-export { isResourceType, isResourceId }
