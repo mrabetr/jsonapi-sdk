@@ -42,6 +42,7 @@ export interface StockLocation extends Resource {
   name: string
   description?: string
 
+  address?: Address
   stock_items?: StockItem[]
   products?: Product[]
 }
@@ -95,7 +96,16 @@ export interface Customer extends Resource {
   first_name?: string
   last_name?: string
 
-  addresses: Address[]
+  addresses?: Address[]
+  orders?: Order[]
+  transactions?: Transaction[]
+}
+
+export interface Merchant extends Resource {
+  name: string
+
+  address?: Address
+  stores?: Store[]
 }
 
 export interface Store extends Resource {
@@ -192,7 +202,7 @@ export interface Transaction extends Resource {
   order?: Order
 }
 
-type AddressOwner = 'Customer' | 'Merchant' | 'StockLocation'
+type AddressOwner = Customer | Merchant | StockLocation
 
 export interface Address extends Resource {
   first_name: string
