@@ -9,42 +9,37 @@ describe('deserialize product', () => {
       type: "product",
       id: "1",
       attributes: {
-        name: "iPhone 13 Pro Silver 128GB",
-        sku: "iphone-13-pro-silver-128gb"
+        name: "iPhone 13 Pro",
+        sku: "iphone-13-pro",
+        parent: true
       },
       relationships: {
         variations: {
           data: [
-            {
-              type: "variation",
-              id: "1"
-            },
-            {
-              type: "variation",
-              id: "2"
-            }
+            { type: "variation", id: "1" },
+            { type: "variation", id: "2" }
           ]
         },
         children: {
           data: [
-            {
-              type: "product",
-              id: "1"
-            },
-            {
-              type: "product",
-              id: "2"
-            }
+            { type: "product", id: "2" },
+            { type: "product", id: "3" },
           ]
         }
       }
-    }
+    },
+    included: [
+      { type: "variation", id: "1", attributes: { name: "Color" } },
+      { type: "variation", id: "2", attributes: { name: "Capacity" } },
+      { type: "product", id: "2", attributes: { name: "iPhone 13 Pro Silver 64GB", sku: "iphone-13-pro-silver-64gb", parent: false } },
+      { type: "product", id: "3", attributes: { name: "iPhone 13 Pro Silver 128GB", sku: "iphone-13-pro-silver-128gb", parent: false } }
+    ]
   };
 
-  let JSONAPIObject: ResourceObject = {
-    type: "product",
-    id: "1"
-  };
+  // let JSONAPIObject: ResourceObject = {
+  //   type: "product",
+  //   id: "1"
+  // };
   // console.log(JSONAPIObject);
 
   const deserialized = deserialize(response) as Product;
@@ -73,7 +68,7 @@ describe('deserialize product', () => {
       // Attributes object from the DocWithData response object
       const res = response.data as ResourceObject;
       // Attributes subset object from the deserialized Resource object
-      const deserializedAttributes = (({ name, sku }) => ({ name, sku }))(deserialized);
+      const deserializedAttributes = (({ name, sku, parent }) => ({ name, sku, parent }))(deserialized);
 
       expect(deserializedAttributes).toEqual(res.attributes)
     })
@@ -89,15 +84,9 @@ describe('serialize cart', () => {
     email: null,
     currency: "USD",
     cart_items: [
-      {
-        id: "202",
-        type: 'cart_item'
-      }
+      { id: "202", type: 'cart_item' }
     ],
-    store: {
-      id: "52",
-      type: "store"
-    }
+    store: { id: "52", type: "store" }
   }
 
   const serialized = serialize(resource);
@@ -136,17 +125,11 @@ describe('serialize product', () => {
   const resource = {
     id: "1",
     type: "product" as ModelType,
-    name: "iPhone 13 Pro Silver 128GB",
-    sku: "iphone-13-pro-silver-128gb",
+    name: "iPhone 13 Pro",
+    sku: "iphone-13-pro",
     children: [
-      {
-        id: "2",
-        type: 'product'
-      },
-      {
-        id: "3",
-        type: 'product'
-      }
+      { id: "2", type: 'product' },
+      { id: "3", type: 'product' }
     ]
   }
 
